@@ -26,6 +26,8 @@ change - /etc/NetworkManager/NetworkManager.conf - managed=true
 
 Connect
 
+systemctl enable NetworkManager
+
 sudo apt install zram-tools
 
 # apt install
@@ -102,7 +104,6 @@ Set qt6ct
 
 systemctl list-units --type=service
 
-systemctl enable NetworkManager
 systemctl enable bluetooth.service
 systemctl enable NetworkManager-dispatcher.service
 systemctl mask systemd-rfkill.service systemd-rfkill.socket
