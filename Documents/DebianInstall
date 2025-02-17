@@ -1,0 +1,145 @@
+# Debian Install
+
+ALT+CTRL+F2 - Opens Terminal
+df
+umount /target/boot/efi
+umount /target
+mount /dev/nvme0n1p2 /mnt
+mv @rootfs @
+btrfs su cr @snapshots
+mount -o noatime,space_cache=v2,compress=zstd,subvol=@ /dev/nvme0n1p2 /target
+mkdir /target/boot/efi
+mkdir /target/.snapshots
+mount -o noatime,space_cache=v2,compress=zstd,subvol=@snapshots /dev/nvme0n1p2 /target/.snapshots
+
+nano /target/etc/fstab
+CTRL+k - Cut
+CTRL+o - Paste x2
+
+Complete Install
+
+sudo dpkg-reconfigure console-setup
+
+sudo apt install network-manager
+clear - /etc/network/interfaces
+change - /etc/NetworkManager/NetworkManager.conf - managed=true
+
+Connect
+
+sudo apt install zram-tools
+
+# apt install
+acpica-tools
+blueman
+brightnessctl
+cliphist
+dunst
+fastfetch
+flatpak
+fonts-font-awesome
+git
+grub
+hyprland
+hyprpaper
+lf
+network-manager-applet
+nwg-look
+pipewire
+pipewire-alsa
+pipewire-pulse
+qt6ct
+qt6-wayland
+rofi
+slurp
+snapper
+swappy
+terminator
+fonts-terminus
+tlp
+tlp-rdw
+unzip
+vim
+waybar
+wget
+wireplumber
+xdg-desktop-portal-wlr
+zsh
+
+
+# flatpaks
+audacity
+bitwarden
+bleachbit
+eog
+firefox
+flatseal
+gimp
+joplin
+mpv
+obs-studio
+pitivi
+protonvpn
+pwvucontrol
+seahorse
+standardnotes
+
+
+Brave:
+sudo apt install curl
+sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo apt update
+sudo apt install brave-browser
+
+mkdir
+.themes
+untar Material
+copy to .themes
+copy to usr/share/themes
+Set NWG-Look
+Set qt6ct
+
+systemctl list-units --type=service
+
+systemctl enable NetworkManager
+systemctl enable bluetooth.service
+systemctl enable NetworkManager-dispatcher.service
+systemctl mask systemd-rfkill.service systemd-rfkill.socket
+systemctl enable tlp.service
+
+git clone https://github.com/jwno-git/locker
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.zsh/zsh-syntax-highlighting
+
+# Btrfs/Snapper Setup
+sudo umount /.snapshots
+sudo rm -rf /.snapshots
+sudo snapper -c root create-config
+sudo btrfs subvolume delete /.snapshots
+sudo mkdir /.snapshots
+sudo mount -a 
+sudo chmod 750 /.snapshots
+sudo btrfs property set -ts /.snapshots ro false
+sudo vim /etc/snapper/configs/root
+Add user
+min age - 1800
+3 hourly
+5 daily
+0 rest
+
+sudo systemctl enable snapper-timeline.timer
+sudo systemctl enable snapper-cleanup.timer
+
+systemctl edit snapper-timeline.timer
+
+[Timer]
+OnCalendar=hourly
+
+systemctl edit snapper-cleanup.timer
+
+[Timer]
+OnBootSec=10m
+OnUnitActiveSec=4h
+
+
+acpica.sh
