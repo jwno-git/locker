@@ -1,0 +1,34 @@
+
+desktop-color: "#000000"
+
+title-text:" "
+message-color: "#757575"
+terminal-left: "0"
+terminal-top: "0"
+terminal-width: "100%"
+terminal-height: "100%"
+terminal-border: "0"
+
++ boot_menu {
+  left = 25%
+  width = 50%
+  top = 30%
+  height = 40%
+  item_height = 48
+  item_padding = 8
+  item_spacing = 8
+  menu_pixmap_style = "boot_menu_*.png"
+  item_font = "Poppins Regular 18"
+  item_color = "#D3D3D3"
+  selected_item_color= "#FF00FF"
+  selected_item_pixmap_style= "select_bkg_*.png"
+}
+
++ image {
+		top = 80%+47
+		left = 50%-240
+		width = 480
+		height = 42
+		file = "menu.png"
+}
+
